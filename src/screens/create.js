@@ -1,30 +1,23 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { createPost } from "../actions";
+import {connect}  from "react-redux";
 
 
-const Create = () => {
+const Create = ({createPost}) => {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [isPending, setIsPending] = useState(false);
-    const history = useHistory();
+    const token = JSON.parse(localStorage.getItem("token"));
 
     function handleClick(e) {
         e.preventDefault();
         const blog = { title, body };
 
         setIsPending(true)
+        createPost(blog,token)
 
-        fetch('http://localhost:8000/api/posts/', {
-            method: 'POST',
-            headers: { "content-Type": "application/json" },
-            body: JSON.stringify(blog)
-        })
-            .then(() => {
-                setIsPending(false);
-                console.log('blog created');
-                history.push('/');
-            })
     }
+
     return (
         <div className="create">
             <h2>Add a New Blog</h2>
@@ -33,10 +26,11 @@ const Create = () => {
                 <input type="text" value={title} onChange={(e) => { setTitle(e.target.value) }} id="title" required />
                 <label htmlFor="body">body</label>
                 <textarea cols={50} rows={10} type="text" value={body} onChange={(e) => { setBody(e.target.value) }} id="body" required />
-                {isPending ? <button disabled>Loading....</button> : <button>Create Blog</button>}
+                <button type="submit">Create Blog</button>
+                {/* {isPending ? <button disabled>Loading....</button> : <button>Create Blog</button>} */}
             </form>
         </div>
     );
 }
 
-export default Create;
+export default connect(null,{createPost})(Create);

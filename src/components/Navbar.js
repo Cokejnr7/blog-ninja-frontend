@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-const Navbar = () => {
+import { connect } from "react-redux";
+import { signOut } from "../actions";
+
+const Navbar = ({signOut}) => {
     const history = useHistory();
     const logout = ()=>{
        localStorage.removeItem("token");
@@ -13,12 +16,12 @@ const Navbar = () => {
                 <Link to="/">Home</Link>
                 <Link to="/create" >New Blog</Link>
             </div>
-            <button className="log" onClick={logout}>Logout</button>
+            <button className="log" onClick={signOut}>Logout</button>
         </nav>
     );
 }
 
-export default Navbar;
+export default connect(null,{signOut})(Navbar);
 
 
 // dynamic styling
