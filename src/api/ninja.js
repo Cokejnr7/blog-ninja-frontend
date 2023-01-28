@@ -1,5 +1,5 @@
-import axios from 'axios';
+import axios from "axios";
 
 export default axios.create({
-    baseURL: 'http://localhost:8000'
-})
+  baseURL: "https://web-production-4ea1.up.railway.app",
+});

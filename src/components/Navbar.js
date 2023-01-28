@@ -1,14 +1,8 @@
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../actions";
 
 const Navbar = ({signOut}) => {
-    const history = useHistory();
-    const logout = ()=>{
-       localStorage.removeItem("token");
-        history.push("/login");
-    }
     return (
         <nav className="navbar">
             <h1>The Dojo Blog</h1>

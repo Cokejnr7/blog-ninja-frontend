@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 
 
-const BlogDetail = ({blog,match,fetchPost} ) => {
+const BlogDetail = ({blog,match,fetchPost,user} ) => {
     
     const token = JSON.parse(localStorage.getItem("token"))
 
@@ -23,7 +23,7 @@ const BlogDetail = ({blog,match,fetchPost} ) => {
                     <h2>{blog.title}</h2>
                     <b>{blog.author.username}</b>
                     <p>{blog.body}</p>
-                    <button >delete</button>
+                    {blog.author.email === user.email &&<button >delete</button>}
                 </article>
             )} 
         </div>
@@ -31,7 +31,7 @@ const BlogDetail = ({blog,match,fetchPost} ) => {
 }
 
 const mapStateToProps = (state,ownProps)=>{
-    return {blog:state.posts[ownProps.match.params.id]}
+    return {blog:state.posts[ownProps.match.params.id],user:state.auth.user}
 }
 
 export default connect(mapStateToProps,{fetchPost})(BlogDetail);
