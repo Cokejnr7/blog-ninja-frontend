@@ -28,9 +28,12 @@ export const createPost = (body, token) => async (dispatch) => {
   history.push("/");
 };
 
-export const deletePost = (id) => async (dispatch) => {
-  await axios.delete(`/api/posts/${id}`);
-  dispatch({ type: ACTION_TYPES.DELETE_STREAM, payload: id });
+export const deletePost = (id, token) => async (dispatch) => {
+  await axios.delete(`/api/posts/${id}`, {
+    headers: { Authorization: `Token ${token}` },
+  });
+  dispatch({ type: ACTION_TYPES.DELETE_POST, payload: id });
+  history.push("/");
 };
 
 export const editPost = (id) => async (dispatch) => {
@@ -43,7 +46,7 @@ export const signIn = (auth) => async (dispatch) => {
     "https://web-production-4ea1.up.railway.app/auth/login",
     { ...auth }
   );
-  localStorage.setItem("token", JSON.stringify(response.data.token));
+  localStorage.setItem("user", JSON.stringify(response.data));
   dispatch({ type: ACTION_TYPES.SIGN_IN, payload: response.data });
   history.push("/");
 };

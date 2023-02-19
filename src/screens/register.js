@@ -17,7 +17,9 @@ const Register = (props) => {
   //   });
 
   const handleChange = (e) => {
-    authDetails[e.target.name] = e.target.value;
+    const new_authDetails = { ...authDetails };
+    new_authDetails[e.target.name] = e.target.value;
+    setAuthDetails(new_authDetails);
   };
 
   const handleSubmit = async (e) => {
